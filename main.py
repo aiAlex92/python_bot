@@ -1,12 +1,12 @@
 import os
 
 import time
-from replit import db
+# from replit import db
 from telegram import Update, Message, InlineKeyboardMarkup, InlineKeyboardButton #upm package(python-telegram-bot)
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext  #upm package(python-telegram-bot)
 from telegram.constants import MAX_MESSAGE_LENGTH
 
-from user_db import User
+from user_db import User, load_db, save_db, db
 
 def handler_error (update: Update, context: CallbackContext):
     """Log Errors caused by Updates."""
@@ -195,6 +195,7 @@ def print_command(update: Update, context: CallbackContext) -> None:
     #update.message.reply_text("Не понятно :(")
 
 def main():
+    load_db()
     updater = Updater("1749703925:AAFAYnEJKRZNTNhfx0FSX4YxHa5-QpVuvxA")
 
     dispatcher = updater.dispatcher
@@ -211,6 +212,8 @@ def main():
     updater.start_polling()
 
     updater.idle()
+
+    save_db()
 
 if __name__ == '__main__':
     main()
